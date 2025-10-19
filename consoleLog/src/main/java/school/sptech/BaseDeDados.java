@@ -7,7 +7,7 @@ public class BaseDeDados {
     private Integer ano;
     private Municipio municipio;
 
-    public BaseDeDados(Integer qtdOcorrencias, Integer ano, String tipo, Integer mes, Municipio municipio) {
+    public BaseDeDados(String tipo, Integer qtdOcorrencias, Integer ano, Integer mes, Municipio municipio) {
         this.qtdOcorrencias = qtdOcorrencias;
         this.ano = ano;
         this.tipo = tipo;
