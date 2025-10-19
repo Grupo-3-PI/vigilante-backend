@@ -2,6 +2,7 @@ package school.sptech;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeituraDados {
+
+    Conexao conexao = new Conexao();
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(conexao.getConexao());
+
 
     DataFormatter formatter = new DataFormatter();
 
