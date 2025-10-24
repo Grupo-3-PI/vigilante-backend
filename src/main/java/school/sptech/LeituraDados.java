@@ -12,10 +12,6 @@ import java.util.List;
 
 public class LeituraDados {
 
-    Conexao conexao = new Conexao();
-    JdbcTemplate jdbcTemplate = new JdbcTemplate(conexao.getConexao());
-
-
     DataFormatter formatter = new DataFormatter();
 
     //Método - Leitura das Bases de dados - Crimes

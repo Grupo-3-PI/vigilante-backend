@@ -1,26 +1,23 @@
 package school.sptech;
-import org.apache.logging.log4j.core.appender.db.jdbc.DriverManagerConnectionSource;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Conexao {
-    private DataSource conexao;
+
+    private final JdbcTemplate conexao;
 
     public Conexao() {
-        DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setUsername("");
-        driver.setPassword("");
-        driver.setUrl("jdbc:mysql://localhost:3306/teste?useSSL=false&serverTimezone=UT");
-        //trocar "teste" e adicionar senha e username
-        driver.setDriverClassName("com.mysql.cj.jdbc.Driver\n");
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/teste?useSSL=false&serverTimezone=UTC");
+        dataSource.setUsername("root");
+        dataSource.setPassword("@01100304Gui#");
 
-        this.conexao = driver;
+        this.conexao = new JdbcTemplate(dataSource);
     }
 
-    public DataSource getConexao() {
+    public JdbcTemplate getConexao() {
         return conexao;
     }
-
-
 }
