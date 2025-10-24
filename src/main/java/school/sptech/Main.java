@@ -10,13 +10,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/teste?useSSL=false&serverTimezone=UTC");
-        dataSource.setUsername("root");
-        dataSource.setPassword("@01100304Gui#");
+        Conexao conexao = new Conexao();
 
         LeituraDados leituraDados = new LeituraDados();
-        InsercaoBD insercaoBDCrime = new InsercaoBD(dataSource);
+        InsercaoBD insercaoBDCrime = new InsercaoBD(conexao.getConexao());
 
         Path caminhoCrime = Paths.get("crimes", "OcorrenciaMensal(Criminal)-Mongaguá_20250815_155244.xlsx");
         List<Crime> crimes = leituraDados.lerCrimes(caminhoCrime.toString());
