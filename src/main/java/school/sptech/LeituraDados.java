@@ -7,121 +7,103 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LeituraDados {
 
-    private void logComTimestamp(String mensagem) {
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        System.out.println("[LOG] " + timestamp + " - " + mensagem);
-    }
-
     Conexao conexao = new Conexao();
     JdbcTemplate jdbcTemplate = new JdbcTemplate(conexao.getConexao());
+
+
     DataFormatter formatter = new DataFormatter();
 
-    // Método - Leitura das Bases de dados - Crimes
+    //Método - Leitura das Bases de dados - Crimes
     public List<Crime> lerCrimes(String caminhoDoArquivo) throws IOException {
 
-        logComTimestamp("Iniciando leitura das bases de dados de crimes.");
-        logComTimestamp("Abrindo arquivo: " + caminhoDoArquivo);
-
+        //Acessando a planilha
         InputStream arquivo = new FileInputStream(caminhoDoArquivo);
         Workbook workbook = new XSSFWorkbook(arquivo);
+        //Criando variáveis
         Sheet sheet = workbook.getSheetAt(0);
-
         Integer ultimaLinha = sheet.getLastRowNum();
         List<Crime> listaDeCrimes = new ArrayList<>();
         Row linhaAnoMunicipios = sheet.getRow(1);
 
-        logComTimestamp("Arquivo carregado. Total de linhas encontradas: " + ultimaLinha);
-
+        //Percorrendo a planilha
         for (int i = 1; i <= ultimaLinha; i++) {
             Row linhaAtual = sheet.getRow(i);
-            if (linhaAtual == null) continue;
-
-            String tipo = linhaAtual.getCell(0).getStringCellValue();
-            Integer ano = (int) linhaAnoMunicipios.getCell(15).getNumericCellValue();
-            Municipio municipio = new Municipio(linhaAnoMunicipios.getCell(14).getStringCellValue(), 0);
-
-            int totalLinha = 0;
 
             for (int j = 1; j <= 12; j++) {
+                //Pegando valoresda planilha
+                String tipo = linhaAtual.getCell(0).getStringCellValue();
+                //Formatando ocorrências
                 String valorOcorrencia = formatter.formatCellValue(linhaAtual.getCell(j));
                 if (valorOcorrencia.equals("...")) break;
-
                 Integer qtdOcorrencia = 0;
                 try {
                     qtdOcorrencia = Integer.parseInt(valorOcorrencia);
                 } catch (NumberFormatException e) {
-                    // Mantém 0 se não for número
+                    //Se não for número, continua 0
                 }
 
-                listaDeCrimes.add(new Crime(tipo, qtdOcorrencia, ano, j, municipio, 0));
-                totalLinha += qtdOcorrencia;
-            }
+                Integer ano = (int) linhaAnoMunicipios.getCell(15).getNumericCellValue();
+                Integer mes = j;
+                Municipio municipio = new Municipio(linhaAnoMunicipios.getCell(14).getStringCellValue(), 0);
 
-            logComTimestamp("Lendo linha " + i + ": " + tipo + " - Total: " + totalLinha);
+                Crime crime = new Crime(tipo, qtdOcorrencia, ano, mes, municipio, 0);
+                listaDeCrimes.add(crime);
+            }
         }
 
         workbook.close();
         arquivo.close();
 
-        logComTimestamp("Leitura de crimes finalizada. Total de registros: " + listaDeCrimes.size());
         return listaDeCrimes;
     }
 
-    // Método - Leitura das Bases de dados - Produtividade Policial
+    //Método - Leitura das Bases de dados - Produtividade Policial
     public List<ProdutividadePolicial> lerProdutividadePolicial(String caminhoDoArquivo) throws IOException {
 
-        logComTimestamp("Iniciando leitura das bases de dados de produtividade policial.");
-        logComTimestamp("Abrindo arquivo: " + caminhoDoArquivo);
-
+        //Acessando a planilha
         InputStream arquivo = new FileInputStream(caminhoDoArquivo);
         Workbook workbook = new XSSFWorkbook(arquivo);
-        Sheet sheet = workbook.getSheetAt(0);
 
+        //Criando variáveis
+        Sheet sheet = workbook.getSheetAt(0);
         Integer ultimaLinha = sheet.getLastRowNum();
         List<ProdutividadePolicial> listaDeProdutividadePolicial = new ArrayList<>();
         Row linhaAnoMunicipios = sheet.getRow(1);
 
-        logComTimestamp("Arquivo carregado. Total de linhas encontradas: " + ultimaLinha);
-
+        //Percorrendo a planilha
         for (int i = 1; i <= ultimaLinha; i++) {
             Row linhaAtual = sheet.getRow(i);
-            if (linhaAtual == null) continue;
-
-            String tipo = linhaAtual.getCell(0).getStringCellValue();
-            Integer ano = (int) linhaAnoMunicipios.getCell(15).getNumericCellValue();
-            Municipio municipio = new Municipio(linhaAnoMunicipios.getCell(14).getStringCellValue(), 0);
-
-            int totalLinha = 0;
 
             for (int j = 1; j <= 12; j++) {
+                //Pegando valores da planilha
+                String tipo = linhaAtual.getCell(0).getStringCellValue();
+                //Formatando ocorrências
                 String valorOcorrencia = formatter.formatCellValue(linhaAtual.getCell(j));
                 if (valorOcorrencia.equals("...")) break;
-
                 Integer qtdOcorrencia = 0;
                 try {
                     qtdOcorrencia = Integer.parseInt(valorOcorrencia);
                 } catch (NumberFormatException e) {
-                    // Mantém 0 se não for número
+                    //Se não for número, continua 0
                 }
 
-                listaDeProdutividadePolicial.add(new ProdutividadePolicial(tipo, qtdOcorrencia, ano, j, municipio));
-                totalLinha += qtdOcorrencia;
-            }
+                Integer ano = (int) linhaAnoMunicipios.getCell(15).getNumericCellValue();
+                Integer mes = j;
+                Municipio municipio = new Municipio(linhaAnoMunicipios.getCell(14).getStringCellValue(), 0);
 
-            logComTimestamp("Lendo linha " + i + ": " + tipo + " - Total: " + totalLinha);
+                ProdutividadePolicial produtividadePolicial = new ProdutividadePolicial(tipo, qtdOcorrencia, ano, mes, municipio);
+                listaDeProdutividadePolicial.add(produtividadePolicial);
+            }
         }
 
         workbook.close();
         arquivo.close();
 
-        logComTimestamp("Leitura de produtividade policial finalizada. Total de registros: " + listaDeProdutividadePolicial.size());
         return listaDeProdutividadePolicial;
     }
 }
