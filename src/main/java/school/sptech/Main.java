@@ -44,7 +44,8 @@ public class Main {
                     .build();
 
             InputStream objectContent = credenciais.getObject(getObjectRequest, ResponseTransformer.toInputStream());
-            Files.copy(objectContent, new File(object.key()).toPath());
+            Files.copy(objectContent, new File(object.key()).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
         }
 
         Path caminhoCrime = Paths.get("crimes", "OcorrenciaMensal(Criminal)-Mongaguá_20250815_155244.xlsx");
