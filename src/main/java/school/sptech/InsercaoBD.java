@@ -39,7 +39,8 @@ public class InsercaoBD {
         for (Crime crimeDaVez : crimes) {
             try {
                 logComTimestamp("Inserindo crime: " + crimeDaVez.getTipo() +
-                        " - Município: " + crimeDaVez.getMunicipio().getNome(), YELLOW);
+                        " - Município: " + crimeDaVez.getMunicipio().getNome() +
+                        " - Data: 0" + crimeDaVez.getMes() + "/" + crimeDaVez.getAno(), YELLOW);
 
                 jdbcTemplate.update(
                         "INSERT INTO ocorrencias (tipo, qtd_ocorrencia, mes, ano, nome_municipio, gravidade) VALUES (?, ?, ?, ?, ?, ?)",
