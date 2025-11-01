@@ -19,6 +19,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
 
+
         //Variáveis para inserir crimes/produtividade policial na lista e colocar no banco de dados
         Conexao conexao = new Conexao();
         LeituraDados leituraDados = new LeituraDados();

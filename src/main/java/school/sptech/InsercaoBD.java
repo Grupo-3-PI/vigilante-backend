@@ -44,7 +44,6 @@ public class InsercaoBD {
 
                 int fkMunicipio = 0;
 
-                // Define o ID do município conforme o nome
                 switch (crimeDaVez.getMunicipio().getNome()) {
                     case "Bertioga":
                         fkMunicipio = 1;
