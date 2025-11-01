@@ -19,31 +19,6 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        //Configurações para conexão com S3
-        S3Provider s3Client = new S3Provider();
-        S3Client credenciais = s3Client.getS3Client();
-        String bucketName = "s3-prevcrime";
-        ListObjectsRequest listObjects = ListObjectsRequest.builder().bucket(bucketName).build();
-
-        List<Bucket> buckets = credenciais.listBuckets().buckets();
-        for (Bucket bucket : buckets) {
-            System.out.println("Bucket: " + bucket.name());
-        }
-
-        BasicDataSource dataSource = new BasicDataSource();
-
-        List<S3Object> objects = credenciais.listObjects(listObjects).contents();
-        for (S3Object object : objects) {
-            GetObjectRequest getObjectRequest = GetObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(object.key())
-                    .build();
-
-            InputStream objectContent = credenciais.getObject(getObjectRequest, ResponseTransformer.toInputStream());
-            Files.copy(objectContent, new File(object.key()).toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-
-        }
-
         //Variáveis para inserir crimes/produtividade policial na lista e colocar no banco de dados
         Conexao conexao = new Conexao();
         LeituraDados leituraDados = new LeituraDados();
@@ -53,6 +28,7 @@ public class Main {
         //Loop para inserir crimes/produtividade policial na lista e colocar no banco de dados
         String[] municipios = {"Bertioga", "Cubatão", "Guarujá", "Itanhaém", "Mongaguá", "Peruíbe",
         "Praia Grande", "Santos", "São Vicente"};
+
 
         for (int i = 0; i < municipios.length; i++) {
             //Inserindo crimes

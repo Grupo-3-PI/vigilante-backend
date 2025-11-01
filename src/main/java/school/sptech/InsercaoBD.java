@@ -42,14 +42,50 @@ public class InsercaoBD {
                         " - Município: " + crimeDaVez.getMunicipio().getNome() +
                         " - Data: 0" + crimeDaVez.getMes() + "/" + crimeDaVez.getAno(), YELLOW);
 
+                int fkMunicipio = 0;
+
+                // Define o ID do município conforme o nome
+                switch (crimeDaVez.getMunicipio().getNome()) {
+                    case "Bertioga":
+                        fkMunicipio = 1;
+                        break;
+                    case "Cubatão":
+                        fkMunicipio = 2;
+                        break;
+                    case "Guarujá":
+                        fkMunicipio = 3;
+                        break;
+                    case "Itanhaém":
+                        fkMunicipio = 4;
+                        break;
+                    case "Mongaguá":
+                        fkMunicipio = 5;
+                        break;
+                    case "Peruíbe":
+                        fkMunicipio = 6;
+                        break;
+                    case "Praia Grande":
+                        fkMunicipio = 7;
+                        break;
+                    case "Santos":
+                        fkMunicipio = 8;
+                        break;
+                    case "São Vicente":
+                        fkMunicipio = 9;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Município desconhecido: " + crimeDaVez.getMunicipio().getNome());
+                }
+
                 jdbcTemplate.update(
-                        "INSERT INTO ocorrencias (tipo, qtd_ocorrencia, mes, ano, nome_municipio, gravidade) VALUES (?, ?, ?, ?, ?, ?)",
+                        "INSERT INTO Ocorrencias (nome_crime, qtd_ocorrencias, mes, ano, gravidade, tipo_ocorrencia, fk_municipio) VALUES (?, ?, ?, ?, ?, ?, ?)",
                         crimeDaVez.getTipo(),
                         crimeDaVez.getQtdOcorrencias(),
                         crimeDaVez.getMes(),
                         crimeDaVez.getAno(),
-                        crimeDaVez.getMunicipio().getNome(),
-                        0
+                        0,
+                        "Crime",
+                        fkMunicipio
                 );
 
                 logComTimestamp("Inserção concluída com sucesso para o crime: " +

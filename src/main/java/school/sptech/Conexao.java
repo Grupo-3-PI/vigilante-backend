@@ -10,7 +10,7 @@ public class Conexao {
     public Conexao() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/teste?useSSL=false&serverTimezone=UTC");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/sistema_criminalidade?useSSL=false&serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("@01100304Gui#");
 
