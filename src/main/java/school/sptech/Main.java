@@ -47,7 +47,7 @@ public class Main {
         //Variáveis para inserir crimes/produtividade policial na lista e colocar no banco de dados
         Conexao conexao = new Conexao();
         LeituraDados leituraDados = new LeituraDados();
-        InsercaoBD insercaoBDCrime = new InsercaoBD(conexao.getConexao());
+        InsercaoBD insercaoBD = new InsercaoBD(conexao.getConexao());
 
 
         //Loop para inserir crimes/produtividade policial na lista e colocar no banco de dados
@@ -60,12 +60,13 @@ public class Main {
             Path caminhoCrime = Paths.get("OcorrenciaMensal(Criminal)-" + municipios[i] + "_2025.xlsx");
             List<Crime> crimes = leituraDados.lerCrimes(caminhoCrime.toString());
             System.out.println(crimes.toString());
-            insercaoBDCrime.inserirCrime(crimes);
+            insercaoBD.inserirCrime(crimes);
 
             //Inserindo produtividade policial
             Path caminhoProdutividadePolicial = Paths.get("OcorrenciaMensal(ProdutividadePolicial)-" + municipios[i] + "_2025.xlsx");
             List<ProdutividadePolicial> produtividadePolicial = leituraDados.lerProdutividadePolicial(caminhoProdutividadePolicial.toString());
             System.out.println(produtividadePolicial.toString());
+            insercaoBD.inserirProdutividadePolicial(produtividadePolicial);
         }
 
     }

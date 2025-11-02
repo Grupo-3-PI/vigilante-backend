@@ -26,6 +26,34 @@ public class InsercaoBD {
         System.out.println(cor + "[LOG] " + timestamp + " - " + mensagem + RESET);
     }
 
+    //Método para retornar o número do município
+    private Integer obterFkMunicipio(String nomeMunicipio) {
+        switch (nomeMunicipio) {
+            case "Bertioga":
+                return 1;
+            case "Cubatão":
+                return 2;
+            case "Guarujá":
+                return 3;
+            case "Itanhaém":
+                return 4;
+            case "Mongaguá":
+                return 5;
+            case "Peruíbe":
+                return 6;
+            case "Praia Grande":
+                return 7;
+            case "Santos":
+                return 8;
+            case "São Vicente":
+                return 9;
+            default:
+                throw new IllegalArgumentException("Município desconhecido: " + nomeMunicipio);
+        }
+    }
+
+
+    //Inserindo crime no BD
     public void inserirCrime(List<Crime> crimes) {
 
         if (crimes == null || crimes.isEmpty()) {
@@ -42,39 +70,7 @@ public class InsercaoBD {
                         " - Município: " + crimeDaVez.getMunicipio().getNome() +
                         " - Data: 0" + crimeDaVez.getMes() + "/" + crimeDaVez.getAno(), YELLOW);
 
-                int fkMunicipio = 0;
-
-                switch (crimeDaVez.getMunicipio().getNome()) {
-                    case "Bertioga":
-                        fkMunicipio = 1;
-                        break;
-                    case "Cubatão":
-                        fkMunicipio = 2;
-                        break;
-                    case "Guarujá":
-                        fkMunicipio = 3;
-                        break;
-                    case "Itanhaém":
-                        fkMunicipio = 4;
-                        break;
-                    case "Mongaguá":
-                        fkMunicipio = 5;
-                        break;
-                    case "Peruíbe":
-                        fkMunicipio = 6;
-                        break;
-                    case "Praia Grande":
-                        fkMunicipio = 7;
-                        break;
-                    case "Santos":
-                        fkMunicipio = 8;
-                        break;
-                    case "São Vicente":
-                        fkMunicipio = 9;
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Município desconhecido: " + crimeDaVez.getMunicipio().getNome());
-                }
+                Integer fkMunicipio = obterFkMunicipio(crimeDaVez.getMunicipio().getNome());
 
                 jdbcTemplate.update(
                         "INSERT INTO Ocorrencias (nome_crime, qtd_ocorrencias, mes, ano, gravidade, tipo_ocorrencia, fk_municipio) VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -98,4 +94,46 @@ public class InsercaoBD {
 
         logComTimestamp("Finalizando inserção de dados na tabela 'ocorrencias'.", CYAN);
     }
+
+    //Inserindo produtividade no BD
+    public void inserirProdutividadePolicial(List<ProdutividadePolicial> produtividades) {
+
+        if (produtividades == null || produtividades.isEmpty()) {
+            System.out.println(RED + "[ERRO] Lista de produtividades vazia. Inserção cancelada." + RESET);
+            return;
+        }
+
+        logComTimestamp("Iniciando inserção de dados na tabela 'ocorrencias' (Produtividade Policial).", CYAN);
+        logComTimestamp("Quantidade de registros a inserir: " + produtividades.size(), CYAN);
+
+        for (ProdutividadePolicial produtividadeDaVez : produtividades) {
+            try {
+                logComTimestamp("Inserindo produtividade: " + produtividadeDaVez.getTipo() +
+                        " - Município: " + produtividadeDaVez.getMunicipio().getNome() +
+                        " - Data: 0" + produtividadeDaVez.getMes() + "/" + produtividadeDaVez.getAno(), YELLOW);
+
+                Integer fkMunicipio = obterFkMunicipio(produtividadeDaVez.getMunicipio().getNome());
+
+                jdbcTemplate.update(
+                        "INSERT INTO Ocorrencias (nome_crime, qtd_ocorrencias, mes, ano, tipo_ocorrencia, fk_municipio) VALUES (?, ?, ?, ?, ?, ?)",
+                        produtividadeDaVez.getTipo(),
+                        produtividadeDaVez.getQtdOcorrencias(),
+                        produtividadeDaVez.getMes(),
+                        produtividadeDaVez.getAno(),
+                        "Produtividade Policial",
+                        fkMunicipio
+                );
+
+                logComTimestamp("Inserção concluída com sucesso para: " +
+                        produtividadeDaVez.getTipo(), GREEN);
+
+            } catch (Exception e) {
+                logComTimestamp("Erro ao inserir produtividade: " + produtividadeDaVez.getTipo() +
+                        " - " + e.getMessage(), RED);
+            }
+        }
+
+        logComTimestamp("Finalizando inserção de dados na tabela 'ocorrencias' (Produtividade Policial).", CYAN);
+    }
+
 }
