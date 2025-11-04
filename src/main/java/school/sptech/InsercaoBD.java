@@ -9,7 +9,6 @@ public class InsercaoBD {
 
     private final JdbcTemplate jdbcTemplate;
 
-    // Códigos de cor ANSI
     private static final String RESET = "\u001B[0m";
     private static final String GREEN = "\u001B[32m";
     private static final String YELLOW = "\u001B[33m";
@@ -20,13 +19,17 @@ public class InsercaoBD {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Método auxiliar para logs com timestamp e cor
     private void logComTimestamp(String mensagem, String cor) {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         System.out.println(cor + "[LOG] " + timestamp + " - " + mensagem + RESET);
+        String tipo = "INFO";
+        if (cor.equals(RED)) tipo = "ERRO";
+        else if (cor.equals(GREEN)) tipo = "SUCESSO";
+        else if (cor.equals(YELLOW)) tipo = "AVISO";
+        else if (cor.equals(CYAN)) tipo = "PROCESSO";
+        jdbcTemplate.update("INSERT INTO Logs (mensagem, tipo, dt_registro) VALUES (?, ?, ?)", mensagem, tipo, timestamp);
     }
 
-    //Método para retornar o número do município
     private Integer obterFkMunicipio(String nomeMunicipio) {
         switch (nomeMunicipio) {
             case "Bertioga":
@@ -52,12 +55,10 @@ public class InsercaoBD {
         }
     }
 
-
-    //Inserindo crime no BD
     public void inserirCrime(List<Crime> crimes) {
 
         if (crimes == null || crimes.isEmpty()) {
-            System.out.println(RED + "[ERRO] Lista de crimes vazia. Inserção cancelada." + RESET);
+            logComTimestamp("Lista de crimes vazia. Inserção cancelada.", RED);
             return;
         }
 
@@ -83,23 +84,20 @@ public class InsercaoBD {
                         fkMunicipio
                 );
 
-                logComTimestamp("Inserção concluída com sucesso para o crime: " +
-                        crimeDaVez.getTipo(), GREEN);
+                logComTimestamp("Inserção concluída com sucesso para o crime: " + crimeDaVez.getTipo(), GREEN);
 
             } catch (Exception e) {
-                logComTimestamp("Erro ao inserir crime: " + crimeDaVez.getTipo() +
-                        " - " + e.getMessage(), RED);
+                logComTimestamp("Erro ao inserir crime: " + crimeDaVez.getTipo() + " - " + e.getMessage(), RED);
             }
         }
 
         logComTimestamp("Finalizando inserção de dados na tabela 'ocorrencias'.", CYAN);
     }
 
-    //Inserindo produtividade no BD
     public void inserirProdutividadePolicial(List<ProdutividadePolicial> produtividades) {
 
         if (produtividades == null || produtividades.isEmpty()) {
-            System.out.println(RED + "[ERRO] Lista de produtividades vazia. Inserção cancelada." + RESET);
+            logComTimestamp("Lista de produtividades vazia. Inserção cancelada.", RED);
             return;
         }
 
@@ -124,12 +122,10 @@ public class InsercaoBD {
                         fkMunicipio
                 );
 
-                logComTimestamp("Inserção concluída com sucesso para: " +
-                        produtividadeDaVez.getTipo(), GREEN);
+                logComTimestamp("Inserção concluída com sucesso para: " + produtividadeDaVez.getTipo(), GREEN);
 
             } catch (Exception e) {
-                logComTimestamp("Erro ao inserir produtividade: " + produtividadeDaVez.getTipo() +
-                        " - " + e.getMessage(), RED);
+                logComTimestamp("Erro ao inserir produtividade: " + produtividadeDaVez.getTipo() + " - " + e.getMessage(), RED);
             }
         }
 

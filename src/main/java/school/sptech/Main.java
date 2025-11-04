@@ -46,7 +46,7 @@ public class Main {
 
         //Variáveis para inserir crimes/produtividade policial na lista e colocar no banco de dados
         Conexao conexao = new Conexao();
-        LeituraDados leituraDados = new LeituraDados();
+        LeituraDados leituraDados = new LeituraDados(conexao.getConexao());
         InsercaoBD insercaoBD = new InsercaoBD(conexao.getConexao());
 
 
