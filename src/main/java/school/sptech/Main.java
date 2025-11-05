@@ -51,8 +51,7 @@ public class Main {
 
 
         //Loop para inserir crimes/produtividade policial na lista e colocar no banco de dados
-        String[] municipios = {"Bertioga", "Cubatão", "Guarujá", "Itanhaém", "Mongaguá", "Peruíbe",
-        "Praia Grande", "Santos", "São Vicente"};
+        String[] municipios = {"Praia Grande", "Santos"};
 
 
         for (int i = 0; i < municipios.length; i++) {

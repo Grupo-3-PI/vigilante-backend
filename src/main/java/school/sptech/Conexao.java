@@ -17,7 +17,7 @@ public class Conexao {
 
 
         if (dbUrl == null) {
-            dbUrl = "jdbc:mysql://23.22.22.8:3306/PrevCrime_Vigilante?useSSL=false&serverTimezone=UTC";
+            dbUrl = "jdbc:mysql://23.22.22.8:3306/PrevCrime_Vigilante?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
         }
         if (dbUser == null) {
             dbUser = "root";
