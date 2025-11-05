@@ -10,9 +10,25 @@ public class Conexao {
     public Conexao() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://23.22.22.8:3306/PrevCrime_Vigilante?useSSL=false&serverTimezone=UTC");
-        dataSource.setUsername("root");
-        dataSource.setPassword("urubu100");
+
+        String dbUrl = System.getenv("DB_URL");
+        String dbUser = System.getenv("DB_USER");
+        String dbPass = System.getenv("DB_PASS");
+
+
+        if (dbUrl == null) {
+            dbUrl = "jdbc:mysql://23.22.22.8:3306/PrevCrime_Vigilante?useSSL=false&serverTimezone=UTC";
+        }
+        if (dbUser == null) {
+            dbUser = "root";
+        }
+        if (dbPass == null) {
+            dbPass = "urubu100";
+        }
+
+        dataSource.setUrl(dbUrl);
+        dataSource.setUsername(dbUser);
+        dataSource.setPassword(dbPass);
 
         this.conexao = new JdbcTemplate(dataSource);
     }
