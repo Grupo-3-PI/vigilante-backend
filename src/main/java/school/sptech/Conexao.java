@@ -17,7 +17,7 @@ public class Conexao {
 
 
         if (dbUrl == null) {
-            dbUrl = "jdbc:mysql://localhost:3306/PrevCrime_Vigilante";
+            dbUrl = "jdbc:mysql://localhost:3306/banco_vigilante";
         }
         if (dbUser == null) {
             dbUser = "root";
