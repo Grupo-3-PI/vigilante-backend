@@ -22,7 +22,7 @@ public class Main {
         //Configurações para conexão com S3
         S3Provider s3Client = new S3Provider();
         S3Client credenciais = s3Client.getS3Client();
-        String bucketName = "s3-prevcrime";
+        String bucketName = "s3-sptech-teste";
         ListObjectsRequest listObjects = ListObjectsRequest.builder().bucket(bucketName).build();
 
         List<Bucket> buckets = credenciais.listBuckets().buckets();
