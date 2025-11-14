@@ -74,7 +74,7 @@ public class InsercaoBD {
                 Integer fkMunicipio = obterFkMunicipio(crimeDaVez.getMunicipio().getNome());
 
                 jdbcTemplate.update(
-                        "INSERT INTO Ocorrencias (tipo_ocorrencia, qtd_ocorrencias, mes, ano, nome_crime, gravidade fk_municipio) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        "INSERT INTO Ocorrencias (tipo_ocorrencia, qtd_ocorrencias, mes, ano, nome_crime, gravidade, fk_municipio) VALUES (?, ?, ?, ?, ?, ?, ?)",
                         "Crime",
                         crimeDaVez.getQtdOcorrencias(),
                         crimeDaVez.getMes(),
