@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-public class    InsercaoBD {
+public class InsercaoBD {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -74,13 +74,13 @@ public class    InsercaoBD {
                 Integer fkMunicipio = obterFkMunicipio(crimeDaVez.getMunicipio().getNome());
 
                 jdbcTemplate.update(
-                        "INSERT INTO Ocorrencias (nome_crime, qtd_ocorrencias, mes, ano, gravidade, tipo_ocorrencia, fk_municipio) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                        crimeDaVez.getTipo(),
+                        "INSERT INTO Ocorrencias (tipo_ocorrencia, qtd_ocorrencias, mes, ano, nome_crime, gravidade fk_municipio) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                        "Crime",
                         crimeDaVez.getQtdOcorrencias(),
                         crimeDaVez.getMes(),
                         crimeDaVez.getAno(),
+                        crimeDaVez.getTipo(),
                         0,
-                        "Crime",
                         fkMunicipio
                 );
 
@@ -113,12 +113,12 @@ public class    InsercaoBD {
                 Integer fkMunicipio = obterFkMunicipio(produtividadeDaVez.getMunicipio().getNome());
 
                 jdbcTemplate.update(
-                        "INSERT INTO Ocorrencias (nome_crime, qtd_ocorrencias, mes, ano, tipo_ocorrencia, fk_municipio) VALUES (?, ?, ?, ?, ?, ?)",
-                        produtividadeDaVez.getTipo(),
+                        "INSERT INTO Ocorrencias (tipo_ocorrencia, qtd_ocorrencias, mes, ano, nome_crime, fk_municipio) VALUES (?, ?, ?, ?, ?, ?)",
+                        "Produtividade Policial",
                         produtividadeDaVez.getQtdOcorrencias(),
                         produtividadeDaVez.getMes(),
                         produtividadeDaVez.getAno(),
-                        "Produtividade Policial",
+                        produtividadeDaVez.getTipo(),
                         fkMunicipio
                 );
 
