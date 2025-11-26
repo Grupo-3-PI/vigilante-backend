@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 public class LeituraDados {
 
@@ -50,7 +51,7 @@ public class LeituraDados {
             try {
                 String tipo = linhaAtual.getCell(0).getStringCellValue();
                 Integer ano = (int) linhaAnoMunicipios.getCell(15).getNumericCellValue();
-                Municipio municipio = Municipio.valueOf(linhaAnoMunicipios.getCell(14).getStringCellValue().toUpperCase().replace("", "_"));
+                Municipio municipio = Municipio.valueOf(StringUtils.stripAccents(linhaAnoMunicipios.getCell(14).getStringCellValue().toUpperCase().replace(" ", "_")));
 
                 int totalLinha = 0;
 
@@ -104,7 +105,7 @@ public class LeituraDados {
             try {
                 String tipo = linhaAtual.getCell(0).getStringCellValue();
                 Integer ano = (int) linhaAnoMunicipios.getCell(15).getNumericCellValue();
-                Municipio municipio = Municipio.valueOf(linhaAnoMunicipios.getCell(14).getStringCellValue().toUpperCase().replace("", "_"));
+                Municipio municipio = Municipio.valueOf(StringUtils.stripAccents(linhaAnoMunicipios.getCell(14).getStringCellValue().toUpperCase().replace(" ", "_")));
 
                 int totalLinha = 0;
 
