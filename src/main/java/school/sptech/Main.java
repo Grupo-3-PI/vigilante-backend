@@ -57,8 +57,9 @@ public class Main {
 
 
         for (int i = 0; i < municipios.length; i++) {
+
             // Insere ocorrências desde 2023 até o ano atual (configure ano atual no topo do código)
-            for (int ano = 2023; ano <= anoAtual; ano++) {
+            for (int ano = 2023; ano <= anoAtual ; ano++) {
 
                 //Inserindo crimes
                 Path caminhoCrime = Paths.get("OcorrenciaMensal(Criminal)-" + municipios[i] + "_" + ano + ".xlsx");
@@ -67,7 +68,7 @@ public class Main {
                 insercaoBD.inserirCrime(crimes);
 
                 //Inserindo produtividade policial
-                Path caminhoProdutividadePolicial = Paths.get("OcorrenciaMensal(ProdutividadePolicial)-" + municipios[i] + "_" + ano + ".xlsx");
+                Path caminhoProdutividadePolicial = Paths.get("OcorrenciaMensal(ProdutividadePolicial)-" + municipios[i] + "_" + ano +".xlsx");
                 List<ProdutividadePolicial> produtividadePolicial = leituraDados.lerProdutividadePolicial(caminhoProdutividadePolicial.toString());
                 System.out.println(produtividadePolicial.toString());
                 insercaoBD.inserirProdutividadePolicial(produtividadePolicial);
