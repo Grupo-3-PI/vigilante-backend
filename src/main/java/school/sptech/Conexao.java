@@ -17,13 +17,13 @@ public class Conexao {
 
 
         if (dbUrl == null) {
-            dbUrl = "jdbc:mysql://container-banco-vigilante:3306/PrevCrime_Vigilante";
+            dbUrl = "jdbc:mysql://localhost:3306/PrevCrime_Vigilante";
         }
         if (dbUser == null) {
             dbUser = "root";
         }
         if (dbPass == null) {
-            dbPass = "urubu100";
+            dbPass = "senha";
         }
 
         dataSource.setUrl(dbUrl);

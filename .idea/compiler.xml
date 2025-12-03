@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="consoleLog" />
+        <module name="vigilante-backend" />
+        <module name="vigilante-backend (1)" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="consoleLog" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
